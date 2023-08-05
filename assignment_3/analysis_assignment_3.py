@@ -3,28 +3,55 @@
 2.	Find the minimum and maximum values of Age.
 3.	Count the number of rows that satisfy the condition that “age is 28 and Gender is Female”"""
 
-import pandas as pd
 class DataAnalysis:
-    def __init__(self, file) -> None:
-        self.file =file
+    def __init__(self, file):
+        self.file = file
     
-    # Calculate the average value of salary.
+    # Read CSV file and return a list of dictionaries
+    def read_csv(self):
+        with open(self.file, 'r') as f:
+            lines = f.readlines()
+            header = lines[0].strip().split(',')
+            data = [line.strip().split(',') for line in lines[1:]]
+            data_dicts = [dict(zip(header, row)) for row in data]
+            return data_dicts
+    
+    # Calculate the average value of salary
     def calc_avg_salary(self):
-        data = pd.read_csv(self.file)
-        salary_data = data['Salary'].mean()
-        return {'average_salary': salary_data}
+        data_dicts = self.read_csv()
+        total_salary = 0
+        num_entries = len(data_dicts)
+        
+        for entry in data_dicts:
+            total_salary += float(entry['Salary'])
+        
+        if num_entries > 0:
+            average_salary = total_salary / num_entries
+        else:
+            average_salary = 0
+        
+        return {'average_salary': average_salary}
    
-    # Find the minimum and maximum values of Age.
+    # Find the minimum and maximum values of Age
     def calc_min_max_age(self):
-        data = pd.read_csv(self.file)
-        min_age, max_age = data['Age'].min(), data['Age'].max()
+        data_dicts = self.read_csv()
+        if data_dicts:
+            ages = [int(entry['Age']) for entry in data_dicts]
+            min_age = min(ages)
+            max_age = max(ages)
+        else:
+            min_age = 0
+            max_age = 0
+        
         return {'min_age': min_age, 'max_age': max_age}
    
-    #Count the number of rows that satisfy the condition that “age is 28 and Gender is Female”
-    def _number_of_row(self):
-        data = pd.read_csv(self.file)
-        count = data.query("Age == 29 and Gender == 'Female'").shape[0] #shape[0] means rows, 1 for columns
-        return {'total_rows': count} #as there is no female with age of 28, hence the count is 0.
+    # Count the number of rows that satisfy the condition that “age is 28 and Gender is Female”
+    def count_rows_with_condition(self):
+        data_dicts = self.read_csv()
+        count = sum(1 for entry in data_dicts if entry['Age'] == '28' and entry['Gender'] == 'Female')
+        return {'total_rows': count}
 
-data_obj = DataAnalysis(r'/Users/vinayakrao/Documents/Work/Assignment/assignment_3/data.csv')
+data_obj = DataAnalysis('<file_path>')
 print(data_obj.calc_avg_salary())
+print(data_obj.calc_min_max_age())
+print(data_obj.count_rows_with_condition())
