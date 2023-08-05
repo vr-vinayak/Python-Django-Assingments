@@ -1,6 +1,3 @@
-Sure, here is the README.md file based on the utils, views, urls, and settings.py files you provided:
-
-
 # MyMovie
 
 A simple Django REST API that allows you to search for movies on The Movie Database (TMDB) and add ratings to them.
