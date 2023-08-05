@@ -4,7 +4,7 @@ from .views import *
 from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
-router.register('products', ProductViewSet, basename='aircraft_checks')
+router.register('products', ProductViewSet, basename='product_checks')
 
 app_name = 'product'
 
