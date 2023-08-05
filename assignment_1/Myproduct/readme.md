@@ -17,8 +17,7 @@ This is a simple REST API for managing products.
 1. Clone the repository:
 
 ```
-git clone https://github.com/<>/Myproduct.git
-```
+https://github.com/vr-vinayak/Python-Django-Assingments.git```
 
 2. Install the requirements:
 
@@ -38,42 +37,67 @@ SECRET_KEY=your_secret_key
 python manage.py runserver
 
 
-## Usage
-
-The API is documented using Swagger. You can access the documentation at `http://localhost:8000/docs/`.
-
 ## Examples
 
 Here are some examples of how to use the API:
 
+
+* Get Authentication Token for user:
+
+1. Create superuser: 
+```
+python manage.py createsuperuser
+```
+
+2. Get user token:
+```
+curl --location 'http://127.0.0.1:8000/product/user-login/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "<email>",
+    "password": "<passsword>"
+}'
+```
+
 * Get all products:
 
-
-curl http://localhost:8000/product/products/
 ```
+curl --location 'http://127.0.0.1:8000/product/products/' \
+--header 'Authorization: Bearer <token>'```
 
 * Create a new product:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{
-  "name": "Product 1",
-  "description": "This is a product."
-}' http://localhost:8000/product/products/
+curl --location 'http://127.0.0.1:8000/product/products/add-product/' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Milk4",
+    "description": "Milk6",
+    "price": 34.99,
+    "quantity": 9
+}'
 ```
 
 * Update a product:
 
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{
-  "name": "Product 1 (updated)",
-  "description": "This is a product (updated)."
-}' http://localhost:8000/product/products/1/
+curl --location --request PUT 'http://127.0.0.1:8000/product/products/63c954f5-f7a6-4e2e-94a2-9744f5d89f1d/update-product/' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Milk",
+    "description": "Milk6",
+    "price": 34.99,
+    "quantity": 9
+}'
 ```
 
 * Delete a product:
 
 ```
-curl -X DELETE http://localhost:8000/product/products/1/
+curl --location --request DELETE 'http://127.0.0.1:8000/product/products/63c954f5-f7a6-4e2e-94a2-9744f5d89f1d/delete-product/' \
+--header 'Authorization: Bearer <token>'
 ```
 
 ## License
