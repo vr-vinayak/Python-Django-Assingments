@@ -34,8 +34,8 @@ The API can be accessed at `http://localhost:8000/`.
 You can search for movies by title, year, or genre. For example, to search for movies with the title "The Shawshank Redemption", you would use the following URL:
 
 
-http://localhost:8000/movies/movie-search?title=The+Shawshank+Redemption
-```
+curl --location 'http://127.0.0.1:8000/movie/movies/movie-search?year=2020&release_date=2020-08-26&title=Ayumi' \
+--data ''```
 
 The response will be a JSON object with a list of movies that match your search criteria.
 
@@ -44,8 +44,7 @@ The response will be a JSON object with a list of movies that match your search 
 You can add ratings to movies by sending a POST request to the following URL:
 
 ```
-http://localhost:8000/movies/add-movie-rating
-
+http://127.0.0.1:8000/movie/movies/add-movie-rating/
 
 The request body must contain the following data:
 
@@ -54,8 +53,12 @@ The request body must contain the following data:
 
 For example, to add a rating of 4 to the movie "The Shawshank Redemption", you would send the following request:
 
-
-curl -X POST -H "Content-Type: application/json" -d '{ "title": "The Shawshank Redemption", "rating": 4 }' http://localhost:8000/movies/add-movie-rating
+curl --location 'http://127.0.0.1:8000/movie/movies/add-movie-rating/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "title": "The terminal",
+    "rating": 5
+}'
 ```
 
 The response will be a JSON object with a message confirming that the rating was added successfully.
