@@ -25,8 +25,8 @@ Write a Python program that reads a text file named "input.txt" and performs the
 3.	Count the number of rows that satisfy the condition that “age is 28 and Gender is Female”"""
 
 ## Tech Stack Used
-* Python
-* Django REST Framework
+* Python -V: 3.8.10
+* Django REST Framework -V: 4.1 or above
 * sqlite3
 * TMdb API (3rd Party API)
 * File Handling Operations
