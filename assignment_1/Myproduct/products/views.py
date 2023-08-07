@@ -6,12 +6,9 @@ from .serializers import ProductSerializer, LoginSerializer, UserLoginSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from rest_framework_simplejwt.tokens import RefreshToken, UntypedToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
-
-# from rest_framework_jwt.views import ObtainJSONWebToken
-# from rest_framework_jwt.serializers import JSONWebTokenSerializer
 
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -21,6 +18,9 @@ def get_tokens_for_user(user):
     }   
 
 class LoginViews(APIView):
+    """Create a superuser with email & password ,than try to get auth token for
+    authentication and to use the API's for performing CRUD operation 
+    i.e add/update/delete/list. """"
     def post(self, request, format=None):
         """Login with email and password payload."""
         serializer = LoginSerializer(data=request.data)
@@ -34,7 +34,7 @@ class LoginViews(APIView):
                     email=user_obj.email.lower(), password=password)
                 if user is not None:
                     user_id = user.id
-                    token = get_tokens_for_user(user)
+                    token = get_tokens_for_user(user) #Getting the access & refresh auth token based on authenticated user only.
                     return Response(data={"token": token, "id": user_id, "user": user_serializer.data, 'status': status.HTTP_200_OK}, status=status.HTTP_200_OK)
                 else:
                     return Response(data={"user": user_serializer.errors, 'status': status.HTTP_401_UNAUTHORIZED}, status=status.HTTP_401_UNAUTHORIZED)
@@ -50,6 +50,7 @@ class ProductViewSet(ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path='add-product')
     def add_product(self, request, *args, **kwargs):
+        """ TO ADD PRODUCT ONLY IF THE USER IS AUTHENTICATED""""
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -59,6 +60,7 @@ class ProductViewSet(ModelViewSet):
         
     @action(detail=True, methods=['put'], url_path='update-product')
     def update_product(self, request, pk=None):
+        """ TO UPDATE PRODUCT BASED ON SPECIFIC PROVIDED `id`, ONLY IF THE USER IS AUTHENTICATED""""
         product_obj=self.get_object()
         serializer = ProductSerializer(product_obj, data=request.data)
         if serializer.is_valid():
@@ -69,6 +71,7 @@ class ProductViewSet(ModelViewSet):
     
     @action(detail=True, methods=['delete'], url_path='delete-product')
     def delete_product(self, request, pk=None):
+        """ TO DELETE PRODUCT BASED ON SPECIFIC PROVIDED `id`, ONLY IF THE USER IS AUTHENTICATED""""
         product_obj = self.get_object()
         product_obj.delete()
         return Response(data={'message': f'product deleted successfully {product_obj}', 'status':status.HTTP_200_OK}, status=status.HTTP_200_OK)
