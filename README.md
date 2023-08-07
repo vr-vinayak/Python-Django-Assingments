@@ -1,6 +1,6 @@
 # Python-Django-Assingments
 
-This repository contains all 4 assignments for the Django Rest Framework CRUD Operations with TMdb API, File handling & Data analysis.
+This repository contains all 4 assignments for the Django Rest Framework CRUD Operations with TMdb API, Unit Test cases for CRUD operations & jwt authentication(**In assignment 1**), File handling & Data analysis 
 
 ## Assignment 1
 
