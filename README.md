@@ -8,7 +8,7 @@ This assignment uses Python and Django REST Framework to create a simple CRUD AP
 
 ## Assignment 2
 
-This assignment integrates the TMdb API into the API This allows the API to fetch movie data from TMdb allows users to search for movies by title, genre, or release year & add movie-rating.
+This assignment integrates the TMdb API into the API This allows the API to fetch movie data from TMdb allows users to search for movies by title, genre, or release year & add movie-rating in maintain the data in local database.
 
 ## Assignment 3
 Write a Python program that reads a text file named "input.txt" and performs the following tasks:
