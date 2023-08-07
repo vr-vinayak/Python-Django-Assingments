@@ -9,6 +9,9 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import MovieRatingSerializer
 from .utils import _movies_search
 
+""" Integrated with 3rd Party API `TMdb API` for movies dataset retrieval 
+and adding search functionality, pagination of per page size 10 & 
+movie rating by user """
 class MovieViewset(ModelViewSet):
     serializer_class = MovieRatingSerializer
     queryset = Movie.objects.all()
@@ -16,6 +19,7 @@ class MovieViewset(ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='movie-search')
     def movies_search(self, request, *args, **kwargs):
+        """ Search For movies based on parameters title, year or release date. """
         query_params = request.query_params
         title = query_params.get('title', '')
         year = query_params.get('year', '')
@@ -37,10 +41,10 @@ class MovieViewset(ModelViewSet):
         rating = request.data.get('rating')
         
         if not title or rating is None:
-            return Response({'error': 'Title and rating are required.'}, status=400)
+            return Response({'error': 'Title and rating are required.'}, status=status.HTTP_400_BAD_REQUEST)
         
         if rating < 0 or rating > 5:
-            return Response({'error': 'Rating must be between 0 and 5.'}, status=400)
+            return Response({'error': 'Rating must be between 0 and 5.'}, status=status.HTTP_400_BAD_REQUEST)
         
         movie, created = Movie.objects.get_or_create(title=title)
         movie.rating = rating
