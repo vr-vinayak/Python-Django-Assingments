@@ -45,8 +45,8 @@ class LoginViews(APIView):
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    pagination_class = CustomPagination
-    permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagination #Added pagination with custom pagination class method with 10 objects per page.
+    permission_classes = [IsAuthenticated] #Authentication required to access the API's.
 
     @action(detail=False, methods=['post'], url_path='add-product')
     def add_product(self, request, *args, **kwargs):
