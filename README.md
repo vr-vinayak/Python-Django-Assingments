@@ -34,13 +34,13 @@ Write a Python program that reads a text file named "input.txt" and performs the
 ## Instructions
 
 To run the API, you will need to have Python and Django installed. Once you have those installed, you can clone the repository and run the following command:
-Note*: Only for assignment 1 & 2 this requirements are needed.
+**Note*: Only for assignment 1 & 2 this requirements are needed.
 
 python manage.py runserver
 
 For Assignment 3 & 4:
-  TO RUN THE SCCRIPT: 
-    python3 file_name.
+**  To run the Python script: 
+**    python3 file_name.
 
 This will start the API on your local machine. You can then access the API at http://localhost:8000/.
 
